@@ -68,7 +68,7 @@ year_list=list(df["AÑO"].drop_duplicates().dropna()) #Creates a list for the ye
 dropdown_year = dcc.Dropdown(
     id="year_dropdown",
     options=year_list,
-    value=[2019, 2018],
+    value=year_list,
     multi=True,
 )
 

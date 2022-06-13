@@ -20,7 +20,6 @@ from app import app
 df = pd.read_excel(os.path.join("data","BD.xlsx"), header=1)
 
 line_data= pd.DataFrame(df.groupby(["LOCALIDAD","AÑO"])["General"].mean()).reset_index()
-
 fig_line = px.line(line_data, x="AÑO", y="General",color="LOCALIDAD")
 
 ##############################

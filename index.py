@@ -1,4 +1,5 @@
 # Basics Requirements
+from multiprocessing.sharedctypes import Value
 import pathlib
 import os
 from tkinter import DOTBOX
@@ -52,6 +53,8 @@ app.layout = html.Div(
 # Load and modify the data that will be used in the app.
 #################################################################
 
+df = pd.read_excel(os.path.join("data","BD.xlsx"), header=1)
+
 #############################################################
 # LINE PLOT : Add sidebar interaction here
 #############################################################
@@ -68,8 +71,23 @@ app.layout = html.Div(
 
 
 #############################################################
-# MAP : Add interactions here
+# Lines: Add interactions here
 #############################################################
+
+@app.callback(
+    Output("overla_lines", "figure"),
+    [Input("location_dropdown", "value"),
+    Input("year_dropdown", "value"),
+    Input("type_dropdown", "value"),
+    Input("type_analysis_dropdown", "value")
+    ],
+)
+def update_overal_lines_graph(location_dropdown,year_dropdown,type_dropdown,type_analysis_dropdown):
+    new_df= df[df["LOCALIDAD"].isin(location_dropdown)&df["AÑO"].isin(year_dropdown)]
+    line_data= pd.DataFrame(new_df.groupby(["LOCALIDAD","AÑO"])["General"].mean()).reset_index()
+
+    fig_line = px.line(line_data, x="AÑO", y="General",color="LOCALIDAD")
+    return fig_line
 
 # MAP date interaction
 
