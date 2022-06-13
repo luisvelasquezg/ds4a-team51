@@ -29,13 +29,28 @@ DS4A_Img = html.Div(
 )
 
 #############################################################################
-# Location Dropdown Card
+# type of analysis Dropdown Card
 #############################################################################
 
 df = pd.read_excel(os.path.join("data","BD.xlsx"), header=1)
 
+exclude_columns=["AÑO","CONSECUTIO","INSCRIPCION","LOCALIDAD","TIPO","COD TIPO","NOMBRE"]
+type_analysis= list(df.columns)
+for column in exclude_columns:
+    type_analysis.remove(column)
+
+
+dropdown_type_analysis = dcc.Dropdown(
+    id="type_analysis_dropdown",
+    value=["General"],
+    options=type_analysis 
+)
+
+#############################################################################
+# Location Dropdown Card
+#############################################################################
+
 localidades_list=list(df["LOCALIDAD"].drop_duplicates().dropna()) #Creates a list for the locations from the database
-year_list=list(df["AÑO"].drop_duplicates().dropna()) #Creates a list for the years from the database
 
 dropdown_loc = dcc.Dropdown(
     id="location_dropdown",
@@ -48,10 +63,25 @@ dropdown_loc = dcc.Dropdown(
 # year Dropdown Card
 ##############################################################################
 
+year_list=list(df["AÑO"].drop_duplicates().dropna()) #Creates a list for the years from the database
+
 dropdown_year = dcc.Dropdown(
     id="year_dropdown",
     options=year_list,
     value=[2019, 2018],
+    multi=True,
+)
+
+##############################################################################
+# type Dropdown Card
+##############################################################################
+
+type=list(df["TIPO"].drop_duplicates().dropna()) #Creates a list for the TIPO from the database
+
+dropdown_type = dcc.Dropdown(
+    id="type_dropdown",
+    options=type,
+    value=["PRIVADO", "PUBLICO"],
     multi=True,
 )
 
@@ -63,10 +93,18 @@ sidebar = html.Div(
         DS4A_Img,  # Add the DS4A_Img located in the assets folder
         html.Hr(),  # Add an horizontal line
         ####################################################
+        html.H5("Seleccionar tipo de cumplimiento"),
+        dropdown_type_analysis,   
+        html.Hr(),     
         html.H5("Seleccionar localidad"),
         dropdown_loc,
+        html.Hr(),
         html.H5("Seleccionar año"),
-        dropdown_year
+        dropdown_year,
+        html.Hr(),
+        html.H5("Seleccionar tipo de jardin"),
+        dropdown_type,
+        html.Hr()
         ####################################################
     ],
     className="ds4a-sidebar",
