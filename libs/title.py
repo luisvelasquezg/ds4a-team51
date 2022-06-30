@@ -12,7 +12,7 @@ title=html.Div(className="ds4a-title",
     children=[
         dbc.Row([
             dbc.Col(
-                html.H1("ds4a-team51 Project"),
+                html.H1("DS4A Project - Team 51"),
                 width={"size": 6, "offset": 3}
                 )
         ])

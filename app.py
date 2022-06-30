@@ -12,7 +12,7 @@ import os
 
 app = Dash(__name__, external_stylesheets=[dbc.themes.COSMO],
                 meta_tags=[{'name':'viewport', 'content':'width=device-width, initial-scale=1.0'}])
-app.title = 'ds4a-team51 Project'  
+app.title = 'DS4A Project - Team 51'  
 
 #server = app.server
 
