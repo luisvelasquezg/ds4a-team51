@@ -3,8 +3,9 @@ plotly
 pandas
 dash_bootstrap_components
 Flask==2.1.1
+openpyxl
 
-## nuevss librerías
+## nuevss librerÃ­as
 dash-labs==1.1.0
 dash-table==5.0.0
 
