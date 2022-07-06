@@ -1,15 +1,16 @@
 # Aplicación DS4A - Team 51
 
-Esta aplicación contiene la información visual del proyecto del equipo 51 del curso Data Science for All.
+Aplicación del proyecto del Equipo 51 del curso Data Science For All, Cohorte 6.0.
 
-Para correr este archivo, primero hay que tener los paquetes necesarios instalados en el computador, esto se puede hacer desde la terminal con este comando:
+Para correr la aplicación, primero hay que instalar los paquetes neserarios para su ejecución.
+Esto se puede hacer desde la terminal con el siguiente comando:
 
 ```console
-pip install -r requirements
+pip install -r requirements.txt
 ```
 
-Luego se puede iniciar la app de streamlit así
+Luego, se puede iniciar la aplicación así:
 
 ```console
-python index.py
+python app.py
 ```
