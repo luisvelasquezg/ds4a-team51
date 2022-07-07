@@ -17,7 +17,7 @@ terminos = {
     'PUBLICO': 'Público'
 }
 
-ultimo_annio = 2019
+annio_reciente = 2019
 
 
 ####################################################################################################
@@ -49,7 +49,7 @@ def cantidad_tipo_jardines():
 #     Retorna un DataFrame con el promedio del Cumplimiento General por Tipo de Jardín del
 #     último año.
 #     '''
-#     df_1 = df_jardines[df_jardines['AÑO'] == ultimo_annio][['INSCRIPCION', 'NOMBRE', 'TIPO', 'General']]
+#     df_1 = df_jardines[df_jardines['AÑO'] == annio_reciente][['INSCRIPCION', 'NOMBRE', 'TIPO', 'General']]
 #     # Agrupación por Tipo
 #     cumplimiento_general_tipo = df_1.groupby('TIPO').mean('General').reset_index()
 #     return cumplimiento_general_tipo
@@ -71,7 +71,7 @@ def info_cumplimiento_tipos(cumplimiento_general = True):
         'Proceso Administrativo'
     ]
 
-    df_1 = df_jardines[df_jardines['AÑO'] == ultimo_annio][columnas]
+    df_1 = df_jardines[df_jardines['AÑO'] == annio_reciente][columnas]
     cumplimiento_tipos_general = df_1.groupby('TIPO').mean().reset_index()
 
     if cumplimiento_general:

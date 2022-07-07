@@ -106,7 +106,7 @@ cumplimiento_general = model_jardines.info_cumplimiento_tipos()
 cumplimiento_componentes = model_jardines.info_cumplimiento_tipos(cumplimiento_general=False)
 
 # Último año a evaluar
-ultimo_annio = model_jardines.ultimo_annio
+annio_reciente = model_jardines.annio_reciente
 
 
 # Bar Chart - Cumplimiento General de Jardines por Tipo
@@ -116,7 +116,10 @@ fig_cumplimiento_general = px.bar(
                 y = 'General',
                 color = 'TIPO',
                 labels = {'TIPO': 'Tipo', 'General': 'Puntuación'},
-                title = f'Cumplimiento General Promedio - Último Año ({ultimo_annio})')
+                title = f'Cumplimiento General Promedio - Último Año ({annio_reciente})')
+
+fig_cumplimiento_general.update_layout(yaxis_range = [0, 1])
+
 
 # fig_cumplimiento_general.update_layout(
 #                             paper_bgcolor='rgba(0,0,0,0)',
@@ -132,10 +135,13 @@ fig_cumplimiento_componentes = px.bar(
                 x = tipo_jardines,
                 y = 'COMPONENTE', 
                 barmode = 'group',
-                title = f'Puntuación de Componentes por Tipo - Último Año ({ultimo_annio})',
+                title = f'Puntuación de Componentes por Tipo - Último Año ({annio_reciente})',
                 labels = {'variable': 'Tipo', 'value': 'Puntuación'})
 
-fig_cumplimiento_componentes.update_layout(xaxis_title = 'Puntuación Promedio')
+fig_cumplimiento_componentes.update_layout(
+    xaxis_title = 'Puntuación Promedio',
+    xaxis_range = [0, 1]                                    
+)
 
 
 layout = dbc.Container(

@@ -7,7 +7,7 @@ import dash_bootstrap_components as dbc
 # from dash.exceptions import PreventUpdate
 
 # Pages import
-from pages import dashboard
+from pages import dashboard, segmentacion
 
 
 ###########################################################
@@ -104,6 +104,7 @@ navbar_2 = dbc.NavbarSimple(
                 dbc.DropdownMenuItem("Listado de Opciones 2", header=True),
                 # dbc.DropdownMenuItem(dashboard, href=dashboard.get_path()),
                 dbc.DropdownMenuItem(dashboard.page_name, href=dashboard.page_path),
+                dbc.DropdownMenuItem(segmentacion.page_name, href=segmentacion.page_path),
             ],
             nav=True,
             in_navbar=True,
@@ -145,8 +146,10 @@ app.layout = html.Div(
 def display_page(pathname):
     if pathname == dashboard.page_path:
         return dashboard.layout
-    # else:
-    #     return app.layout
+        segmentacion
+    elif pathname == segmentacion.page_path:
+        return segmentacion.layout
+    
 
     # elif pathname == '/singapore':
     #     return singapore.layout
