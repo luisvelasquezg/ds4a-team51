@@ -4,13 +4,29 @@
     background-color: #ffffff
 }
 
+.table-title {
+    font-weight: 700;
+    color: #1c273c;
+    font-size: 20px;
+    padding-top: 3rem;
+    /* margin-bottom: 2px; */
+}
+
+.table-intro {
+    color: #7987a1;
+    font-size: 12px;
+}
+
 .ds4a-body-with-sidebar {
     /*position: static;*/
     /*top: 5rem;*/
     /*margin-top: 15rem;*/
     margin-left: 16rem;
     margin-right: 2rem;
-    padding: 2rem 1rem;
+    /* padding: 1rem 1rem; */
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 4rem;
     background-color: #ffffff;
 }
 
@@ -53,9 +69,13 @@
     bottom: 0;
     width: 16rem;
     padding-top: 6rem;
-    padding-left: 2rem;
+    padding-left: 1rem;
     padding-right: 1rem;
     /* padding: 2rem 1rem; */
     background-color: #AAB7B8;
     z-index: 998;
+}
+
+.card-nosotros {
+    margin-top: 5rem;
 }

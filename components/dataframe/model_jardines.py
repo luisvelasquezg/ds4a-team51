@@ -19,10 +19,40 @@ terminos = {
 
 annio_reciente = 2019
 
+listado_cumplimiento = [
+    'General',
+    'Nutrición y Salubridad',
+    'Ambientes Adecuados y Seguros',
+    'Proceso Pedagógico',
+    'Talento Humano',
+    'Proceso Administrativo'
+]
+listado_localidades = sorted(list(df_jardines['LOCALIDAD'].unique()))
+listado_annios = df_jardines['AÑO'].unique()
+listado_tipos = ['PRIVADO', 'PUBLICO']
+
+
+
 
 ####################################################################################################
 #       FUNCTIONS
 ###################################################################################################
+
+def obtener_promedio_annio(componente, localidad, annio, tipo):
+    '''
+    Retorna una DataFrame sobre el promedio de los cumplimientos según
+    los parámetros especificados.
+    '''
+    datos_seleccion = df_jardines[
+                            df_jardines['LOCALIDAD'].isin(localidad) &
+                            df_jardines["AÑO"].isin(annio) &
+                            df_jardines['TIPO'].isin(tipo)
+                        ]
+
+    datos_seleccion.groupby(["LOCALIDAD", "AÑO"])[componente].mean().reset_index()
+    return datos_seleccion
+
+
 
 def tipo_jardines():
     '''

@@ -7,7 +7,7 @@ import dash_bootstrap_components as dbc
 # from dash.exceptions import PreventUpdate
 
 # Pages import
-from pages import dashboard, segmentacion
+from pages import dashboard, segmentacion, nosotros
 
 
 ###########################################################
@@ -52,68 +52,14 @@ DS4A_Img_2 = html.Img(
 
 project_brand = "DS4A Project - Team 51"
 
+
+
 # Navigation Bar
-
-navbar = dbc.Navbar(
-    dbc.Container(
-        [
-            html.A(
-                dbc.Row(
-                    [
-                        dbc.Col(DS4A_Img_2),
-                        # dbc.Col(html.Img(src=PLOTLY_LOGO, height="30px")),
-                        dbc.Col(dbc.NavbarBrand(project_brand, className="ms-2")),
-                    ],
-                    align="left",
-                    # className="g-0"
-                    )
-            ),
-            dbc.NavItem(dbc.NavLink("Page 1", href="#")),
-            dbc.DropdownMenu(
-                children=[
-                    dbc.DropdownMenuItem("More pages", header=True),
-                    dbc.DropdownMenuItem("Page 2", href="#"),
-                    dbc.DropdownMenuItem("Page 3", href="#"),
-                ],
-                nav=True,
-                in_navbar=True,
-                label="More",
-            ),
-        dbc.NavItem(dbc.NavLink("Nosotros", href="/nosotros")),
-            # dbc.NavbarToggler(id="navbar-toggler", n_clicks=0),
-            # dbc.Collapse(
-            #     search_bar,
-            #     id="navbar-collapse",
-            #     is_open=False,
-            #     navbar=True,
-            # ),
-        ],
-    ),
-    color = "primary",
-    dark = True,
-)
-
-
 navbar_2 = dbc.NavbarSimple(
     children = [
-        dbc.NavItem(dbc.NavLink("Inicio", href="/")),
-        dbc.DropdownMenu(
-            children=[
-                # dbc.DropdownMenuItem(page["name"], href=page["path"])
-                #     for page in dash.page_registry.values(),
-                dbc.DropdownMenuItem("Listado de Opciones", header=True),
-                dbc.DropdownMenuItem("Page 2", href="#"),
-                dbc.DropdownMenuItem("Page 3", href="#"),
-                dbc.DropdownMenuItem("Listado de Opciones 2", header=True),
-                # dbc.DropdownMenuItem(dashboard, href=dashboard.get_path()),
-                dbc.DropdownMenuItem(dashboard.page_name, href=dashboard.page_path),
-                dbc.DropdownMenuItem(segmentacion.page_name, href=segmentacion.page_path),
-            ],
-            nav=True,
-            in_navbar=True,
-            label="Opciones",
-        ),
-        dbc.NavItem(dbc.NavLink("Nosotros", href="/nosotros")),
+        dbc.NavItem(dbc.NavLink(dashboard.page_name, href=dashboard.page_path)),
+        dbc.NavItem(dbc.NavLink(segmentacion.page_name, href=segmentacion.page_path)),
+        dbc.NavItem(dbc.NavLink(nosotros.page_name, href=nosotros.page_path)),
     ],
     brand = project_brand,
     # brand_href = "#",
@@ -153,12 +99,10 @@ def display_page(pathname):
         segmentacion
     elif pathname == segmentacion.page_path:
         return segmentacion.layout
+    elif pathname == nosotros.page_path:
+        return nosotros.layout
     
 
-    # elif pathname == '/singapore':
-    #     return singapore.layout
-    # else:
-    #     return home.layout
 
 
 # This call will be used with Gunicorn server

@@ -1,4 +1,5 @@
 import pandas as pd
+from components.table.table import *
 
 segmentos = pd.read_csv('./data/segmentos.csv')
 
@@ -10,36 +11,35 @@ segmentos['INSCRIPCION'] = segmentos['INSCRIPCION'].apply( lambda x: ''.join(fil
 #       VARIABLES
 ###################################################################################################
 
-# tipo cumplimiento
-
-terminos = {
-    'PRIVADO': 'Privado',
-    'PUBLICO': 'Público'
-}
+dic_tipo_jardines = {'PRIVADO': 'Privado', 'PUBLICO': 'Público'}
 
 annio_reciente = 2019
 
 listado_segmentos = ['Alto', 'Medio', 'Bajo']
 listado_localidades = sorted(list(segmentos['LOCALIDAD'].unique()))
-listado_tipos = ['Privado', 'Público']
+listado_tipos = ['PRIVADO', 'PUBLICO']
 
-# columnas_segmentos = [
-#             # 'INSCRIPCION',
-#             # 'NOMBRE',
-#             'Segmento',
-#             'LOCALIDAD',
-#             'TIPO',
-#             'Nutrición y Salubridad',
-#             'Ambientes Adecuados y Seguros',
-#             'Proceso Pedagógico',
-#             'Talento Humano',
-#             'Proceso Administrativo'
-#         ]
+
+# Variables para Tabla Segmentos
+
+# columnas_tabla = [
+#     'INSCRIPCION',
+#     'NOMBRE',
+#     'LOCALIDAD',
+#     'TIPO',
+#     'Segmento'
+# ]
+
+# parametros_tabla = {
+#     'title': 'Segmentos',
+#     'description': 'Tabla de segmentación de los jardines',
+#     'columns': columnas_tabla
+# }
 
 
 
 ####################################################################################################
-#       FUNCTIONS
+#   Funciones
 ###################################################################################################
 
 def consultar_datos_componentes(segmento, localidad, tipo):
@@ -92,3 +92,31 @@ def consultar_datos_componentes(segmento, localidad, tipo):
 
     return promedio_componentes, existen_datos
 
+################################################################
+
+def generar_tabla_segmentos():
+    '''
+    Retorna tabla de Segmentos de los Jardines.
+    '''
+    columnas_tabla = [
+        'INSCRIPCION',
+        'NOMBRE',
+        'LOCALIDAD',
+        'TIPO',
+        'Segmento'
+    ]
+
+    parametros_tabla = {
+        'title': 'Segmentos',
+        'description': 'Tabla de segmentación de los jardines.',
+        'columns': columnas_tabla
+    }
+
+    datos_tabla = segmentos[columnas_tabla]
+    tabla_segmentos = table(datos_tabla, parametros_tabla)
+
+    return tabla_segmentos
+
+
+
+    ###################################################################################################

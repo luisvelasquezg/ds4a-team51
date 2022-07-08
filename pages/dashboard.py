@@ -12,24 +12,11 @@ from components.dataframe import model_jardines
 page_name = 'Dashboard'
 page_path = '/dashboard'
 
-def get_name():
-    return page_name
-    
-def get_path():
-    return page_path
 
 
-# layout = html.Div([
-#     html.H1('Dashboard'),
-#     html.Div(
-#         [
-#             'My content'
-#         ]
-#     )
-# ])
-
-
-
+####################################################################################
+#   Variables
+####################################################################################
 # Lista de Tipos de Jardines
 tipo_jardines = model_jardines.tipo_jardines()
 
@@ -39,33 +26,27 @@ cantidad_tipo_jardines = model_jardines.cantidad_tipo_jardines()
 # Cantidad de Jardines en total
 total_jardines = cantidad_tipo_jardines.sum()
 
-
-# table_1 =  dash_table.DataTable(
-#     id = 'kindergarten-type',
-#     columns = [{'name': col, 'id': col} for col in columnas_tipo_jardines],
-#     data = cantidad_tipo_jardines.to_dict('records')
-#     # data = electricity.to_dict('records')
-# )
-
 dic_terms = model_jardines.terminos
+####################################################################################
 
-card_1 = dbc.Card(
+
+
+####################################################################################
+#   Componentes
+####################################################################################
+card_tipos = dbc.Card(
     [
         dbc.CardHeader("Tipo de Jardines"),
         dbc.CardBody(
             [
                 html.H6(
                     f'{dic_terms[tipo_jardines[0]]}s: {cantidad_tipo_jardines[0]}',
-                    # {'name': col, 'id': col} for col in tipo_jardines,
                     className="card-title"
                 ),
                 html.H6(
                     f'{dic_terms[tipo_jardines[1]]}s: {cantidad_tipo_jardines[1]}',
-                    # {'name': col, 'id': col} for col in tipo_jardines,
                     className="card-title"
                 ),
-                # html.H4("Card title", className="card-title"),
-                # html.P(f'Total: {total_jardines}', className="card-text"),
             ]
         ),
         dbc.CardFooter(f'Total: {total_jardines}', style = {'font-weight': 'bold'}),
@@ -80,23 +61,6 @@ fig_1 = go.Figure(
         go.Pie(labels = tipo_jardines, values = cantidad_tipo_jardines)
     ]
 )
-
-fig_1.update_layout(
-    paper_bgcolor='rgba(0,0,0,0)',
-    plot_bgcolor='rgba(0,0,0,0)',
-    template = "seaborn",
-    # margin=dict(t=0, b=10, pad=10),
-)
-
-
-# fig_2 = px.pie(values = cantidad_tipo_jardines, labels = tipo_jardines, names = tipo_jardines)
-
-# fig_2.update_layout(
-#     paper_bgcolor='rgba(0,0,0,0)',
-#     plot_bgcolor='rgba(0,0,0,0)',
-#     template = "seaborn",
-#     # margin=dict(t=0, b=10, pad=10),
-# )
 
 
 # Promedio del Cumplimiento General por Tipo de Jardín
@@ -142,17 +106,26 @@ fig_cumplimiento_componentes.update_layout(
     xaxis_title = 'Puntuación Promedio',
     xaxis_range = [0, 1]                                    
 )
+####################################################################################
 
 
+
+####################################################################################
+#   Layout
+####################################################################################
 layout = dbc.Container(
     [
         dbc.Row(
             [
                 dbc.Col(
                     [
-                        html.H1([page_name], id="div_title_dashboard"),
+                        html.H3([page_name], id="div_title_dashboard"),
                     ],
-                    style = {'textAlign': 'center'}
+                    style = {
+                        'textAlign': 'center',
+                        'marginBottom': '2rem',
+                        'marginTop': '2rem',
+                    }
                     # lg=12
                 ), 
             ],
@@ -161,12 +134,25 @@ layout = dbc.Container(
         dbc.Row([
             dbc.Col([
                 dbc.Container([
+                    dbc.Row([
+                        dbc.Col([
+                            html.H5(
+                                'Tipo de Jardines',
+                                style = {'textAlign': 'center'}
+                            )
+                        ])
+                    ]),
                     dbc.Row(
                         [
-                            dbc.Col([
-                                    # table_1
-                                    card_1
-                            ]),
+                            dbc.Col(
+                                    card_tipos,
+                                    style = {
+                                        'textAlign': 'center',
+                                        'paddingLeft': '10rem',
+                                        # 'paddingRight': '2rem',
+                                        # 'padding': '2rem 2rem',
+                                    }
+                            ),
                             # dbc.Col(
                             #     dcc.Graph(id='pie-tipo-jardines-2', figure = fig_2),
                             #     width=4,
@@ -184,7 +170,7 @@ layout = dbc.Container(
                         ]
                     )
                     ],
-                # className= "card",
+                className= "card",
                 ),
             ]),
             dbc.Col(
@@ -207,51 +193,7 @@ layout = dbc.Container(
             )
         ])
     ],
+    style = {'marginTop': '4rem'},
     className= "card"
 )
-
-
-## layout backup ##
-# layout = dbc.Container(
-#     [
-#         dbc.Container([
-#             dbc.Row(
-#                 [
-#                     dbc.Col(
-#                         [
-#                             html.H1([page_name], id="div_title_dashboard"),
-#                         ],
-#                         style = {'textAlign': 'center'}
-#                         # lg=12
-#                     ), 
-#                 ],
-#                 # className= "card"
-#             ),
-#             dbc.Row(
-#                 [
-#                     dbc.Col([
-#                             # table_1
-#                             card_1
-#                     ]),
-#                     # dbc.Col(
-#                     #     dcc.Graph(id='pie-tipo-jardines-2', figure = fig_2),
-#                     #     width=4,
-#                     #     className= "card"
-#                     # )
-#                 ]
-#             ),
-#             dbc.Row(
-#                 [
-#                     dbc.Col(
-#                         dcc.Graph(id='pie-tipo-jardines', figure = fig_1),
-#                         width = 4,
-#                         className= "card"
-#                     )
-#                 ]
-#             )
-#         ],
-#         className= "card"
-#         )
-#     ],
-#     className= "card"
-# )
+####################################################################################
