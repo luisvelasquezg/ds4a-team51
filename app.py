@@ -20,6 +20,9 @@ app = Dash(
     external_stylesheets = [dbc.themes.FLATLY]
 )
 
+# We need this for function callbacks not present in the app.layout
+app.config.suppress_callback_exceptions = True
+
 # app = dash.Dash(
 #     __name__, plugins=[dl.plugins.pages], external_stylesheets=[dbc.themes.FLATLY], update_title='Cargando...'
 # )
@@ -118,6 +121,7 @@ navbar_2 = dbc.NavbarSimple(
     dark = True,
     fluid = True,
     # className="mb-2",
+    className = 'ds4a-navbar'
 )
 
 

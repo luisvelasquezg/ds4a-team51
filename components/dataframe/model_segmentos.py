@@ -19,6 +19,10 @@ terminos = {
 
 annio_reciente = 2019
 
+listado_segmentos = ['Alto', 'Medio', 'Bajo']
+listado_localidades = sorted(list(segmentos['LOCALIDAD'].unique()))
+listado_tipos = ['Privado', 'Público']
+
 # columnas_segmentos = [
 #             # 'INSCRIPCION',
 #             # 'NOMBRE',
@@ -40,9 +44,11 @@ annio_reciente = 2019
 
 def consultar_datos_componentes(segmento, localidad, tipo):
     '''
-    Retorna DataFrame de los Componentes Evaluativos con los parámetros especificados.
+    Retorna DataFrame ('promedio_componentes') de los Componentes Evaluativos
+    con los parámetros especificados y una variable Booleana ('existen_datos')
+    referente a si existen datos o no.
     '''
-
+    existen_datos = True
     columnas_segmentos = [
             # 'INSCRIPCION',
             # 'NOMBRE',
@@ -69,7 +75,7 @@ def consultar_datos_componentes(segmento, localidad, tipo):
     # if datos_seleccionados.empty:
     #     # mensaje = 'No se encuentran datos con los parámetros seleccionados.'
     #     # return mensaje
-    #     return datos_seleccionados
+    #     return None
 
     # Se calcula el promedio de cada columna numérica y se agrupan los datos por el Segmento
     promedio_componentes = datos_seleccionados.groupby('Segmento').mean()
@@ -80,5 +86,9 @@ def consultar_datos_componentes(segmento, localidad, tipo):
     # Se renombra la columna de promedios
     promedio_componentes = promedio_componentes.rename(columns = {f'{segmento[0]}': 'PROMEDIO'})
 
-    return promedio_componentes
+    if 'PROMEDIO' not in promedio_componentes.columns:
+        existen_datos = False
+        promedio_componentes['PROMEDIO'] = 0.0
+
+    return promedio_componentes, existen_datos
 
