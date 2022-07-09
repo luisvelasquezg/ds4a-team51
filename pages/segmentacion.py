@@ -1,4 +1,3 @@
-# from gc import callbacks
 import dash
 from dash import html, dcc, Input, Output, callback
 import dash_bootstrap_components as dbc
@@ -41,8 +40,8 @@ layout = html.Div([
         dbc.Row([
             dbc.Col([
                 html.P(
-                    # mensaje_consulta,
-                    id = 'seccion-mensaje',
+                    # Mensaje sobre la consulta
+                    id = 'seccion-mensaje-segmentacion',
                     style = {
                         'color': 'rgb(239,85,59)',
                         'textAlign': 'center',
@@ -76,7 +75,7 @@ layout = html.Div([
 @callback(
     # Output(component_id, component_property),
     Output('bar-componentes-segmento', 'figure'),
-    Output('seccion-mensaje', 'children'),
+    Output('seccion-mensaje-segmentacion', 'children'),
     Input('segmento-dropdown', 'value'),
     Input('localidad-dropdown', 'value'),
     Input('tipo-dropdown', 'value')

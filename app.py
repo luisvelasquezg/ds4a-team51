@@ -7,7 +7,7 @@ import dash_bootstrap_components as dbc
 # from dash.exceptions import PreventUpdate
 
 # Pages import
-from pages import dashboard, segmentacion, nosotros
+from pages import dashboard, exploracion, segmentacion, nosotros
 
 
 ###########################################################
@@ -29,7 +29,7 @@ app.config.suppress_callback_exceptions = True
 
 # app = Dash(__name__, external_stylesheets=[dbc.themes.COSMO],
 #                 meta_tags=[{'name':'viewport', 'content':'width=device-width, initial-scale=1.0'}])
-# app.title = 'ds4a-team51 Project'
+app.title = 'DS4A Team 51 - Project'
 
 # DS4A_Logo_1 = 'assets/ds4a_colombia.svg'
 DS4A_Logo_1 = 'ds4a_colombia.svg'
@@ -58,6 +58,7 @@ project_brand = "DS4A Project - Team 51"
 navbar_2 = dbc.NavbarSimple(
     children = [
         dbc.NavItem(dbc.NavLink(dashboard.page_name, href=dashboard.page_path)),
+        # dbc.NavItem(dbc.NavLink(exploracion.page_name, href=exploracion.page_path)),
         dbc.NavItem(dbc.NavLink(segmentacion.page_name, href=segmentacion.page_path)),
         dbc.NavItem(dbc.NavLink(nosotros.page_name, href=nosotros.page_path)),
     ],
@@ -96,11 +97,14 @@ app.layout = html.Div(
 def display_page(pathname):
     if pathname == dashboard.page_path:
         return dashboard.layout
-        segmentacion
+    elif pathname == exploracion.page_path:
+        return exploracion.layout
     elif pathname == segmentacion.page_path:
         return segmentacion.layout
     elif pathname == nosotros.page_path:
         return nosotros.layout
+    elif pathname == '/':
+        return dashboard.layout
     
 
 

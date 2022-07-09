@@ -1,11 +1,15 @@
 import pandas as pd
 
 df_jardines = pd.read_csv('./data/BD.csv')
+# df_jardines = pd.read_csv('./data/BD.xlsx')
 
 # Removing non-numerical characters in column 'INSCRIPCION'
 df_jardines['INSCRIPCION'] = df_jardines['INSCRIPCION'].apply( lambda x: ''.join(filter(str.isdigit, str(x))) )
 
+# df_jardines['LOCALIDAD'] = df_jardines['LOCALIDAD'].dropna()
 
+
+# print(df_jardines['LOCALIDAD'].tolist())
 ####################################################################################################
 #       VARIABLES
 ###################################################################################################
@@ -27,9 +31,17 @@ listado_cumplimiento = [
     'Talento Humano',
     'Proceso Administrativo'
 ]
-# listado_localidades = sorted(list(df_jardines['LOCALIDAD'].unique()))
+
+# print(df_jardines['AÑO'].unique())
+# print(df_jardines['LOCALIDAD'].unique())
+# print(df_jardines['LOCALIDAD'].sort_values().unique())
+
+listado_localidades = df_jardines['LOCALIDAD'].drop_duplicates().dropna().sort_values()#.unique()
+# listado_localidades = df_jardines['LOCALIDAD'].sort_values().unique()
+# listado_localidades = sorted(df_jardines['LOCALIDAD'].sort_values().unique().tolist())
+listado_annios = df_jardines['AÑO'].drop_duplicates().dropna()
 # listado_annios = df_jardines['AÑO'].unique()
-# listado_tipos = ['PRIVADO', 'PUBLICO']
+listado_tipos = ['PRIVADO', 'PUBLICO']
 
 
 
@@ -38,19 +50,23 @@ listado_cumplimiento = [
 #       FUNCTIONS
 ###################################################################################################
 
-# def obtener_promedio_annio(componente, localidad, annio, tipo):
-#     '''
-#     Retorna una DataFrame sobre el promedio de los cumplimientos según
-#     los parámetros especificados.
-#     '''
-#     datos_seleccion = df_jardines[
-#                             df_jardines['LOCALIDAD'].isin(localidad) &
-#                             df_jardines["AÑO"].isin(annio) &
-#                             df_jardines['TIPO'].isin(tipo)
-#                         ]
+def consultar_promedio_cumplimiento(cumplimiento, localidades, annios, tipos):
+    '''
+    Retorna una DataFrame sobre el promedio de los cumplimientos según
+    los parámetros especificados.
+    '''
+    existen_datos = True
+    datos_seleccion = df_jardines[
+                            df_jardines['LOCALIDAD'].isin(localidades) &
+                            df_jardines['AÑO'].isin(annios) &
+                            df_jardines['TIPO'].isin(tipos)
+                        ]
+    
+    if datos_seleccion.empty:
+        existen_datos = False
 
-#     datos_seleccion.groupby(["LOCALIDAD", "AÑO"])[componente].mean().reset_index()
-#     return datos_seleccion
+    datos_seleccion.groupby(['LOCALIDAD', 'AÑO'])[cumplimiento].mean().reset_index()
+    return datos_seleccion, existen_datos
 
 
 
@@ -74,15 +90,6 @@ def cantidad_tipo_jardines():
     return cantidad_tipos
 
 
-# def info_cumplimiento_general_tipo():
-#     '''
-#     Retorna un DataFrame con el promedio del Cumplimiento General por Tipo de Jardín del
-#     último año.
-#     '''
-#     df_1 = df_jardines[df_jardines['AÑO'] == annio_reciente][['INSCRIPCION', 'NOMBRE', 'TIPO', 'General']]
-#     # Agrupación por Tipo
-#     cumplimiento_general_tipo = df_1.groupby('TIPO').mean('General').reset_index()
-#     return cumplimiento_general_tipo
 
 def info_cumplimiento_tipos(cumplimiento_general = True):
     '''
@@ -109,16 +116,10 @@ def info_cumplimiento_tipos(cumplimiento_general = True):
         return cumplimiento_tipos_general
     else:
         ##  Columnas:   [COMPONENTE, PRIVADO, PUBLICO]
-        
         # Se transpone el DataFrame 'cumplimiento_tipos_general'
         cumplimiento_tipos_componentes = cumplimiento_tipos_general.set_index('TIPO').T.rename_axis('COMPONENTE').reset_index()
         cumplimiento_tipos_componentes = cumplimiento_tipos_componentes.drop([0], axis = 0)
-        # cumplimiento_tipos_componentes = cumplimiento_tipos_general.set_index('TIPO').T
-        # cumplimiento_tipos_componentes.rename_axis('COMPONENTE').reset_index(inplace = True)
         
-        # Se elimina la primera fila (Cumplimiento 'General')
-        # cumplimiento_tipos_componentes = cumplimiento_tipos_componentes.drop([0], axis = 0)
-        # cumplimiento_tipos_componentes.drop([0], inplace = True)
         
         return cumplimiento_tipos_componentes
 
