@@ -77,5 +77,6 @@ layout = html.Div([
 def actualizar_grafica_linea_exploracion(cumplimiento, localidades, annios, tipos):
     datos_consultados, mensaje_consulta = model_jardines.consultar_promedio_cumplimiento(cumplimiento, localidades, annios, tipos)
     fig_linea = px.line(datos_consultados, x = "AÑO", y = cumplimiento, color = "LOCALIDAD")
+    fig_linea.update_layout(yaxis_range = [0, 1])
     return fig_linea, mensaje_consulta
 ####################################################################################
