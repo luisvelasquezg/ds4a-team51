@@ -58,7 +58,7 @@ project_brand = "DS4A Project - Team 51"
 navbar_2 = dbc.NavbarSimple(
     children = [
         dbc.NavItem(dbc.NavLink(dashboard.page_name, href=dashboard.page_path)),
-        # dbc.NavItem(dbc.NavLink(exploracion.page_name, href=exploracion.page_path)),
+        dbc.NavItem(dbc.NavLink(exploracion.page_name, href=exploracion.page_path)),
         dbc.NavItem(dbc.NavLink(segmentacion.page_name, href=segmentacion.page_path)),
         dbc.NavItem(dbc.NavLink(nosotros.page_name, href=nosotros.page_path)),
     ],

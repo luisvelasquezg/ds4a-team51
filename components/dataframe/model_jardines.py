@@ -56,6 +56,7 @@ def consultar_promedio_cumplimiento(cumplimiento, localidades, annios, tipos):
     los parámetros especificados.
     '''
     existen_datos = True
+    # datos_seleccion = df_jardines['INSCRIPCION'].drop_duplicates()
     datos_seleccion = df_jardines[
                             df_jardines['LOCALIDAD'].isin(localidades) &
                             df_jardines['AÑO'].isin(annios) &
@@ -65,9 +66,16 @@ def consultar_promedio_cumplimiento(cumplimiento, localidades, annios, tipos):
     if datos_seleccion.empty:
         existen_datos = False
 
-    datos_seleccion.groupby(['LOCALIDAD', 'AÑO'])[cumplimiento].mean().reset_index()
+    datos_seleccion = pd.DataFrame(datos_seleccion.groupby(['LOCALIDAD', 'AÑO'])[cumplimiento].mean()).reset_index()
     return datos_seleccion, existen_datos
 
+
+
+# def consultar_promedio_cumplimiento_2(cumplimiento, localidad, annio, tipo):
+    
+#     new_df = df_jardines[df_jardines['LOCALIDAD'].isin(localidad) & df_jardines["AÑO"].isin(annio)]
+#     line_data = pd.DataFrame(new_df.groupby(['LOCALIDAD','AÑO'])[cumplimiento].mean()).reset_index()
+#     return line_data
 
 
 def tipo_jardines():
@@ -83,7 +91,8 @@ def cantidad_tipo_jardines():
     Retorna una Serie de Pandas del número de Jardines por Tipo.
     Columnas: 'TIPO', 'CANTIDAD'
     '''
-    jardines_por_tipo = df_jardines[['INSCRIPCION', 'NOMBRE', 'TIPO']].drop_duplicates('INSCRIPCION')
+    jardines_por_tipo = df_jardines[df_jardines['AÑO'] == annio_reciente]
+    jardines_por_tipo = jardines_por_tipo[['INSCRIPCION', 'NOMBRE', 'TIPO']].drop_duplicates('INSCRIPCION')
     cantidad_tipos = jardines_por_tipo.groupby(jardines_por_tipo['TIPO']).size()#.reset_index()
     # info_tipos = info_tipos.rename(columns = {0: 'CANTIDAD'})
     # info_tipos['TOTAL']
