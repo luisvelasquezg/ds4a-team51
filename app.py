@@ -2,6 +2,11 @@ import dash
 
 from dash import Dash, html, dcc, Input, Output
 
+# Whilst your local machine's webserver doesn't need this, Heroku's linux webserver (i.e. dyno) does. I.e. This is your HTTP server
+import gunicorn
+# For serving static files on Heroku
+from whitenoise import WhiteNoise
+
 import dash_bootstrap_components as dbc
 # import dash_labs as dl
 # from dash.exceptions import PreventUpdate
@@ -58,7 +63,7 @@ project_brand = "DS4A Project - Team 51"
 navbar_2 = dbc.NavbarSimple(
     children = [
         dbc.NavItem(dbc.NavLink(dashboard.page_name, href=dashboard.page_path)),
-        dbc.NavItem(dbc.NavLink(exploracion.page_name, href=exploracion.page_path)),
+        # dbc.NavItem(dbc.NavLink(exploracion.page_name, href=exploracion.page_path)),
         dbc.NavItem(dbc.NavLink(segmentacion.page_name, href=segmentacion.page_path)),
         dbc.NavItem(dbc.NavLink(nosotros.page_name, href=nosotros.page_path)),
     ],
@@ -111,6 +116,9 @@ def display_page(pathname):
 
 # This call will be used with Gunicorn server
 server = app.server
+
+# Heroku deployment
+server.wsgi_app = WhiteNoise(server.wsgi_app, root='static/') 
 
 # Testing server, don't use in production, host
 if __name__ == "__main__":
